@@ -111,14 +111,36 @@
     return true;
   }
 
+  function renderOfficeHours(rows) {
+    if (!rows.length) return false;
+    var map = {};
+    rows.forEach(function (r) { map[r.key] = r.value; });
+
+    var msg = document.getElementById('officeHoursMessage');
+    if (msg && map.office_hours_message) msg.textContent = map.office_hours_message;
+
+    var grid = document.getElementById('officeHoursGrid');
+    if (!grid) return true;
+
+    var days = [];
+    for (var i = 1; i <= 7; i++) {
+      if (map['office_hours_day_' + i] && map['office_hours_time_' + i]) {
+        days.push('<div class="hours-cell"><span class="d">' + escapeHTML(map['office_hours_day_' + i]) + '</span><span class="t">' + escapeHTML(map['office_hours_time_' + i]) + '</span></div>');
+      }
+    }
+    if (days.length) grid.innerHTML = days.join('');
+    return true;
+  }
+
   async function load() {
     var client = getClient();
     if (!client) return;
 
     try {
-      var [eventsRes, annRes] = await Promise.all([
+      var [eventsRes, annRes, settingsRes] = await Promise.all([
         client.from('events').select('*').order('date', { ascending: true }),
-        client.from('announcements').select('*').order('created_at', { ascending: false })
+        client.from('announcements').select('*').order('created_at', { ascending: false }),
+        client.from('settings').select('key', 'value')
       ]);
 
       if (eventsRes.error) throw eventsRes.error;
@@ -126,6 +148,11 @@
 
       renderEvents(eventsRes.data || []);
       renderAnnouncements(annRes.data || []);
+      if (settingsRes.error) {
+        console.warn('[TNS Supabase] Could not load settings:', settingsRes.error.message);
+      } else {
+        renderOfficeHours(settingsRes.data || []);
+      }
     } catch (err) {
       console.warn('[TNS Supabase] Could not load content:', err.message);
     }

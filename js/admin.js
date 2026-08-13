@@ -60,7 +60,8 @@
         document.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.add('hidden-panel'); });
         $('tab-' + btn.dataset.tab).classList.remove('hidden-panel');
         if (btn.dataset.tab === 'events') loadEvents();
-        else loadAnnouncements();
+        else if (btn.dataset.tab === 'announcements') loadAnnouncements();
+        else if (btn.dataset.tab === 'settings') loadSettings();
       });
     });
   }
@@ -119,6 +120,19 @@
     var res = await client.from('announcements').select('*').order('created_at', { ascending: false });
     if (res.error) { toast('Could not load announcements: ' + res.error.message, false); return; }
     renderManageList('annManageList', res.data || [], deleteAnnouncement);
+  }
+
+  async function loadSettings() {
+    if (!client) return;
+    var res = await client.from('settings').select('key', 'value');
+    if (res.error) { toast('Could not load settings: ' + res.error.message, false); return; }
+    var map = {};
+    (res.data || []).forEach(function (r) { map[r.key] = r.value; });
+    $('ohMessage').value = map.office_hours_message || '';
+    $('ohDay1').value = map.office_hours_day_1 || 'Mon – Fri';
+    $('ohTime1').value = map.office_hours_time_1 || '8:00 AM – 1:00 PM';
+    $('ohDay2').value = map.office_hours_day_2 || 'Saturday';
+    $('ohTime2').value = map.office_hours_time_2 || 'Closed';
   }
 
   /* ------------------------------------------------------------------ */
@@ -209,6 +223,26 @@
     loadAnnouncements();
   }
 
+  async function saveOfficeHours(e) {
+    e.preventDefault();
+    var values = [
+      { key: 'office_hours_message', value: $('ohMessage').value.trim() },
+      { key: 'office_hours_day_1', value: $('ohDay1').value.trim() },
+      { key: 'office_hours_time_1', value: $('ohTime1').value.trim() },
+      { key: 'office_hours_day_2', value: $('ohDay2').value.trim() },
+      { key: 'office_hours_time_2', value: $('ohTime2').value.trim() }
+    ].filter(function (s) { return s.value; });
+
+    var btn = e.target.querySelector('button[type=submit]');
+    btn.disabled = true;
+
+    var res = await client.from('settings').upsert(values, { onConflict: 'key' });
+
+    btn.disabled = false;
+    if (res.error) { toast('Failed to save: ' + res.error.message, false); return; }
+    toast('Office hours saved!', true);
+  }
+
   /* ------------------------------------------------------------------ */
   /* AUTH                                                                */
   /* ------------------------------------------------------------------ */
@@ -275,6 +309,7 @@
     $('logoutBtn').addEventListener('click', handleLogout);
     $('eventForm').addEventListener('submit', createEvent);
     $('annForm').addEventListener('submit', createAnnouncement);
+    $('officeHoursForm').addEventListener('submit', saveOfficeHours);
 
     // Restore session if the user refreshed the admin page.
     client.auth.getSession().then(function (res) {

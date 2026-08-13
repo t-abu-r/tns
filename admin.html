@@ -208,6 +208,7 @@
       <div class="flex gap-3 mb-6 max-w-xl mx-auto">
         <button type="button" class="tab-btn active" data-tab="events">Events</button>
         <button type="button" class="tab-btn" data-tab="announcements">Announcements</button>
+        <button type="button" class="tab-btn" data-tab="settings">Settings</button>
       </div>
 
       <!-- ===================== EVENTS TAB ===================== -->
@@ -315,6 +316,43 @@
           <div id="annManageList">
             <p class="text-sm" style="color: var(--muted);">Loading...</p>
           </div>
+        </div>
+      </section>
+
+      <!-- ===================== SETTINGS TAB ===================== -->
+      <section id="tab-settings" class="tab-panel hidden-panel">
+
+        <div class="admin-card p-6 mb-6">
+          <h3 class="font-serif-header font-bold text-lg text-navy mb-1"><i class="fa-solid fa-gear text-gold mr-2" aria-hidden="true"></i>Administrative Office Hours</h3>
+          <p class="text-sm mb-4" style="color: var(--muted);">These hours appear in the Contact section and on the Events &amp; Announcements page. Save to update the website instantly.</p>
+
+          <form id="officeHoursForm" class="grid grid-cols-1 md:grid-cols-2 gap-4" novalidate>
+            <div class="md:col-span-2">
+              <label class="admin-label" for="ohMessage">Office Hours Message</label>
+              <textarea class="admin-textarea" id="ohMessage" rows="3" placeholder="During the summer break, the admissions and admin office is available to assist families..."></textarea>
+            </div>
+            <div>
+              <label class="admin-label" for="ohDay1">Day Row 1</label>
+              <input class="admin-input" type="text" id="ohDay1" placeholder="Mon – Fri">
+            </div>
+            <div>
+              <label class="admin-label" for="ohTime1">Time Row 1</label>
+              <input class="admin-input" type="text" id="ohTime1" placeholder="8:00 AM – 1:00 PM">
+            </div>
+            <div>
+              <label class="admin-label" for="ohDay2">Day Row 2</label>
+              <input class="admin-input" type="text" id="ohDay2" placeholder="Saturday">
+            </div>
+            <div>
+              <label class="admin-label" for="ohTime2">Time Row 2</label>
+              <input class="admin-input" type="text" id="ohTime2" placeholder="Closed">
+            </div>
+            <div class="md:col-span-2">
+              <button type="submit" class="gold-badge px-6 py-2.5 text-navy font-extrabold text-xs rounded-xl uppercase tracking-wider">
+                <i class="fa-solid fa-floppy-disk mr-2" aria-hidden="true"></i>Save Office Hours
+              </button>
+            </div>
+          </form>
         </div>
       </section>
 

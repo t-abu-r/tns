@@ -43,13 +43,32 @@ create table if not exists public.announcements (
 );
 
 -- ---------------------------------------------------------------------------
--- 3. ENABLE ROW LEVEL SECURITY
+-- 3. SETTINGS TABLE (editable content like Administrative Office Hours)
 -- ---------------------------------------------------------------------------
-alter table public.events       enable row level security;
-alter table public.announcements enable row level security;
+create table if not exists public.settings (
+  key        text primary key,
+  value      text not null default '',
+  updated_at timestamptz not null default now()
+);
+
+insert into public.settings (key, value) values
+  ('office_hours_message',
+   'During the summer break, the admissions and admin office is available to assist families with enrollment, fee structure, and prospectus requests.'),
+  ('office_hours_day_1', 'Mon – Fri'),
+  ('office_hours_time_1', '8:00 AM – 1:00 PM'),
+  ('office_hours_day_2', 'Saturday'),
+  ('office_hours_time_2', 'Closed')
+on conflict (key) do update set value = excluded.value, updated_at = now();
 
 -- ---------------------------------------------------------------------------
--- 4. POLICIES — anyone may read
+-- 4. ENABLE ROW LEVEL SECURITY
+-- ---------------------------------------------------------------------------
+alter table public.events        enable row level security;
+alter table public.announcements enable row level security;
+alter table public.settings      enable row level security;
+
+-- ---------------------------------------------------------------------------
+-- 5. POLICIES — anyone may read
 -- ---------------------------------------------------------------------------
 drop policy if exists "public read events" on public.events;
 create policy "public read events"
@@ -63,8 +82,14 @@ create policy "public read announcements"
   for select
   using (true);
 
+drop policy if exists "public read settings" on public.settings;
+create policy "public read settings"
+  on public.settings
+  for select
+  using (true);
+
 -- ---------------------------------------------------------------------------
--- 5. POLICIES — only logged-in users may write
+-- 6. POLICIES — only logged-in users may write
 -- ---------------------------------------------------------------------------
 drop policy if exists "authenticated insert events" on public.events;
 create policy "authenticated insert events"
@@ -104,8 +129,15 @@ create policy "authenticated delete announcements"
   for delete
   using (auth.role() = 'authenticated');
 
+drop policy if exists "authenticated upsert settings" on public.settings;
+create policy "authenticated upsert settings"
+  on public.settings
+  for all
+  using (auth.role() = 'authenticated')
+  with check (auth.role() = 'authenticated');
+
 -- ---------------------------------------------------------------------------
--- 6. OPTIONAL SEED — sample rows so the site is not empty while you test
+-- 7. OPTIONAL SEED — sample rows so the site is not empty while you test
 -- ---------------------------------------------------------------------------
 -- insert into public.events (title, date, description, location, status) values
 --   ('New Academic Session 2026-2027', '2026-08-24',

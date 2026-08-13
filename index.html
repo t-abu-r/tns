@@ -157,6 +157,7 @@
             <a href="#academics" class="nav-link text-slate-100 hover:text-amber-200 py-1">O/A Academics</a>
             <a href="#campus" class="nav-link text-slate-100 hover:text-amber-200 py-1">Campus Life</a>
             <a href="#admissions" class="nav-link text-slate-100 hover:text-amber-200 py-1">Admissions</a>
+            <a href="events.html" class="nav-link text-white hover:text-amber-200 py-1">Events</a>
             <a href="#contact" class="nav-link text-slate-100 hover:text-amber-200 py-1">Contact</a>
           </nav>
 
@@ -195,6 +196,7 @@
         Facilities</a>
       <a href="#admissions"
         class="block py-2 text-sm font-semibold border-b border-white/10 hover:text-amber-200">Admissions &amp; Inquiry</a>
+      <a href="events.html" class="block py-2 text-sm font-semibold border-b border-white/10 hover:text-amber-200">Events &amp; Announcements</a>
       <a href="#contact" class="block py-2 text-sm font-semibold hover:text-amber-200">Contact Us</a>
       <div class="pt-2 flex flex-col space-y-2">
         <button type="button"
@@ -786,6 +788,26 @@
         </div>
       </div>
 
+      <div class="office-hours max-w-4xl mx-auto mb-16">
+        <div class="hours-head">
+          <i class="fa-solid fa-circle-info" aria-hidden="true"></i> Administrative Office Hours
+        </div>
+        <p id="officeHoursMessage">
+          During the summer break, the admissions and admin office is available to assist families with enrollment,
+          fee structure, and prospectus requests.
+        </p>
+        <div class="hours-grid" id="officeHoursGrid">
+          <div class="hours-cell">
+            <span class="d">Mon – Fri</span>
+            <span class="t">8:00 AM – 1:00 PM</span>
+          </div>
+          <div class="hours-cell">
+            <span class="d">Saturday</span>
+            <span class="t">Closed</span>
+          </div>
+        </div>
+      </div>
+
       <div class="faq-card max-w-4xl mx-auto">
         <h3 class="section-title text-center">Frequently Asked Questions</h3>
         <div class="mt-6">
@@ -844,158 +866,6 @@
   </section>
 
   <!-- ==========================================================================
-       9. EVENTS & ANNOUNCEMENTS
-       ========================================================================== -->
-  <section id="events" class="section" aria-label="Events and announcements">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-      <div class="section-head reveal">
-        <span class="eyebrow">News &amp; Events</span>
-        <h2 class="section-title">Events &amp; Announcements</h2>
-        <div class="rule-center" aria-hidden="true"></div>
-        <p class="section-desc">
-          Stay informed about campus activities, academic schedules, and the latest notices from The National School
-          &amp; College administration.
-        </p>
-      </div>
-
-      <div class="events-grid reveal">
-
-        <!-- Upcoming events -->
-        <div>
-          <div class="events-col-head">
-            <span class="chip"><i class="fa-solid fa-calendar-check" aria-hidden="true"></i></span>
-            <h3>Upcoming Events &amp; Schedule</h3>
-          </div>
-
-          <div id="eventsList">
-          <div class="event-item">
-            <div class="event-date">
-              <span class="month">Aug</span>
-              <span class="day">24</span>
-            </div>
-            <div class="event-body">
-              <div class="flex items-center justify-between gap-2 mb-1">
-                <h4>New Academic Session 2026–2027</h4>
-                <span class="event-status">Active Notice</span>
-              </div>
-              <p>
-                Campus reopens for the new academic session on <strong>August 24, 2026</strong>. Administrative offices
-                remain open <strong>Mon–Fri, 8:00 AM – 1:00 PM</strong> for admissions inquiries.
-              </p>
-              <div class="meta">
-                <i class="fa-solid fa-clock" aria-hidden="true"></i>
-                <span>Reopening: 24 August 2026 — New Academic Session 2026–2027</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="event-item">
-            <div class="event-date">
-              <span class="month">Aug</span>
-              <span class="day">24</span>
-            </div>
-            <div class="event-body">
-              <div class="flex items-center justify-between gap-2 mb-1">
-                <h4>Orientation Week — New Session 2026–2027</h4>
-                <span class="event-status">Upcoming</span>
-              </div>
-              <p>Welcome sessions, timetable distribution, and subject counseling for all O &amp; A Level students. Attendance mandatory.</p>
-              <div class="meta">
-                <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
-                <span>Main Assembly Hall, TNS Campus</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="event-item">
-            <div class="event-date">
-              <span class="month">Sep</span>
-              <span class="day">20</span>
-            </div>
-            <div class="event-body">
-              <div class="flex items-center justify-between gap-2 mb-1">
-                <h4>Cambridge High Achievers Ceremony — Sept 2026</h4>
-                <span class="event-status planned">Planned</span>
-              </div>
-              <p>Annual recognition ceremony honoring top CAIE O &amp; A Level results. Prizes, shields, and university scholarship announcements.</p>
-              <div class="meta">
-                <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
-                <span>Auditorium, TNS Campus — Invite Only</span>
-              </div>
-            </div>
-          </div>
-          </div>
-        </div>
-
-        <!-- Notices -->
-        <div>
-          <div class="events-col-head">
-            <span class="chip" style="background: var(--gold); color: var(--navy);"><i class="fa-solid fa-bullhorn" aria-hidden="true"></i></span>
-            <h3>Latest Notices &amp; Announcements</h3>
-          </div>
-
-          <div id="announcementsList">
-          <div class="notice-item academic">
-            <div class="notice-head">
-              <span class="notice-tag"><i class="fa-solid fa-file-lines mr-1" aria-hidden="true"></i>Academic</span>
-              <span class="notice-date">Aug 2026</span>
-            </div>
-            <h4>A-Level Subject Options Form Available</h4>
-            <p>
-              Students joining A-Level (Grade 11) in Session 2026–2027 are requested to collect and submit their
-              subject selection forms from the Admissions Office before August 20.
-            </p>
-            <div class="notice-foot">
-              <span><i class="fa-solid fa-building-columns mr-1.5" aria-hidden="true"></i>Admissions Office</span>
-              <a href="#admissions">Enquire <i class="fa-solid fa-arrow-right text-xs" aria-hidden="true"></i></a>
-            </div>
-          </div>
-
-          <div class="notice-item elearning">
-            <div class="notice-head">
-              <span class="notice-tag"><i class="fa-solid fa-laptop mr-1" aria-hidden="true"></i>E-Learning</span>
-              <span class="notice-date">Summer 2026</span>
-            </div>
-            <h4>Summer Vacation Homework &amp; Assignment Portal</h4>
-            <p>
-              All O &amp; A Level students can access summer revision worksheets, past paper packs, and subject
-              assignments via the TNS student portal. Submissions are due by August 23, 2026.
-            </p>
-            <div class="notice-foot">
-              <span><i class="fa-solid fa-circle-info mr-1.5" aria-hidden="true"></i>Due: 23 August 2026</span>
-              <a href="#contact">Contact Us <i class="fa-solid fa-arrow-right text-xs" aria-hidden="true"></i></a>
-            </div>
-          </div>
-          </div>
-
-          <div class="office-hours">
-            <div class="hours-head">
-              <i class="fa-solid fa-circle-info" aria-hidden="true"></i> Administrative Office Hours
-            </div>
-            <p>
-              During the summer break, the admissions and admin office is available to assist families with enrollment,
-              fee structure, and prospectus requests.
-            </p>
-            <div class="hours-grid">
-              <div class="hours-cell">
-                <span class="d">Mon – Fri</span>
-                <span class="t">8:00 AM – 1:00 PM</span>
-              </div>
-              <div class="hours-cell">
-                <span class="d">Saturday</span>
-                <span class="t">Closed</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ==========================================================================
        10. FOOTER
        ========================================================================== -->
   <footer class="site-footer">
@@ -1029,6 +899,7 @@
             <li><a href="#academics">O-Level Subjects</a></li>
             <li><a href="#academics">A-Level Subjects</a></li>
             <li><a href="#campus">Campus Facilities</a></li>
+            <li><a href="events.html">Events &amp; Announcements</a></li>
           </ul>
         </div>
 
