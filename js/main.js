@@ -33,7 +33,6 @@
     initNavbar();
     initSmoothScroll();
     initHeroCarousel();
-    initStatsCounter();
     initAcademicsTabFilter();
     initFAQAccordion();
   });
@@ -177,48 +176,6 @@ function initHeroCarousel() {
       timer = setInterval(nextSlide, slideInterval);
     });
   });
-}
-
-/* ==========================================================================
-   3. ANIMATED STATS COUNTERS
-   ========================================================================== */
-function initStatsCounter() {
-  const counters = document.querySelectorAll('.counter-val');
-  let animated = false;
-
-  function runCounters() {
-    counters.forEach(counter => {
-      const target = +counter.getAttribute('data-target');
-      const suffix = counter.getAttribute('data-suffix') || '';
-      const prefix = counter.getAttribute('data-prefix') || '';
-      let count = 0;
-      const speed = target / 50;
-
-      const updateCount = () => {
-        count += speed;
-        if (count < target) {
-          counter.innerText = prefix + Math.ceil(count) + suffix;
-          setTimeout(updateCount, 25);
-        } else {
-          counter.innerText = prefix + target + suffix;
-        }
-      };
-
-      updateCount();
-    });
-  }
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting && !animated) {
-        runCounters();
-        animated = true;
-      }
-    });
-  }, { threshold: 0.3 });
-
-  const statsSection = document.getElementById('statsSection');
-  if (statsSection) observer.observe(statsSection);
 }
 
 /* ==========================================================================
@@ -417,7 +374,7 @@ const subjectsData = {
       icon: "fa-scale-balanced", 
       desc: "English legal system, law of contract, law of tort, and criminal law principles.", 
       topics: ["English Legal System", "Law of Contract", "Law of Tort", "Criminal Liability"],
-      teacher: { name: "Sir. Yasir Hussain", role: "A-Level Law Senior Faculty", imagePath: "assets/sir.yasir_hussain_commerce_economics.jpeg" }
+      teacher: { name: "Ms. Farah", role: "A-Level Law Faculty", imagePath: "assets/logo.jpg" }
     },
     { 
       name: "Psychology", 
@@ -525,19 +482,17 @@ function renderSubStreamButtons() {
 
   if (bannerContainer) {
     bannerContainer.classList.remove('hidden');
-    bannerContainer.innerHTML = `
-      <div class="coordinator">
-        <img src="assets/Ms. Sadia Faisal_Coordinator_Business.jpeg" alt="Ms. Sadia Faisal" class="coordinator-photo" onerror="this.onerror=null; this.src='assets/logo.jpg';" />
-        <div>
-          <span class="kicker">Campus Leadership — Cambridge International Pathway</span>
-          <span class="c-name">Ms. Sadia Faisal</span>
-          <span class="c-role">O/A Level Campus Coordinator &bull; Academic Operations Lead</span>
+
+    if (currentLevel === 'preolevel') {
+      bannerContainer.innerHTML = `
+        <div class="info-banner">
+          <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+          <span>Pre-O Level Foundation Program — All 7 Subjects are Compulsory</span>
         </div>
-        <a href="#admissions" class="btn btn-ghost-light btn-sm c-cta">
-          <i class="fa-solid fa-graduation-cap mr-1.5" aria-hidden="true"></i> Academic Counselling
-        </a>
-      </div>
-    `;
+      `;
+    } else {
+      bannerContainer.innerHTML = '';
+    }
   }
 
   filterContainer.classList.remove('hidden');

@@ -381,40 +381,6 @@ footer {
 .rule-left { margin: 1.15rem 0 0; }
 
 /* --------------------------------------------------------------------------
-   7. STATS BAND
-   -------------------------------------------------------------------------- */
-.stats-band {
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  background: var(--bg);
-  padding: 2.4rem 0;
-}
-.stat {
-  text-align: center;
-  border-left: 1px solid var(--line);
-  padding: 0.5rem 1.5rem;
-}
-.stat:first-child { border-left: 0; }
-.stat-num {
-  display: block;
-  font-family: var(--font-serif);
-  font-weight: 700;
-  font-size: 2.6rem;
-  color: var(--navy);
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-}
-.stat-label {
-  display: block;
-  margin-top: 0.55rem;
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-/* --------------------------------------------------------------------------
    8. PRINCIPAL MESSAGE
    -------------------------------------------------------------------------- */
 .message-card {
