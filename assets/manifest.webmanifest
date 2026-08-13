@@ -1,0 +1,17 @@
+{
+  "name": "The National School & College",
+  "short_name": "TNS",
+  "description": "O/A Level Department (Parkview Branch) — Vision Education System",
+  "start_url": "../index.html",
+  "display": "standalone",
+  "background_color": "#002147",
+  "theme_color": "#002147",
+  "icons": [
+    {
+      "src": "logo.jpg",
+      "sizes": "any",
+      "type": "image/jpeg",
+      "purpose": "any"
+    }
+  ]
+}
