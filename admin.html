@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | The National School &amp; College</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Amiri:wght@400;700&display=swap">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    body {
+      background: #EEF2F6;
+      min-height: 100vh;
+    }
+
+    .admin-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+    }
+
+    .admin-input,
+    .admin-select,
+    .admin-textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 0.6rem 0.75rem;
+      font-size: 0.875rem;
+      color: var(--ink);
+      background: #fff;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .admin-input:focus,
+    .admin-select:focus,
+    .admin-textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.18);
+    }
+
+    .admin-label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .tab-btn {
+      flex: 1;
+      text-align: center;
+      padding: 0.8rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: #fff;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn.active {
+      background: var(--navy);
+      color: var(--gold-bright);
+      border-color: var(--navy);
+      box-shadow: var(--shadow-navy);
+    }
+
+    .manage-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--paper);
+      margin-bottom: 0.75rem;
+    }
+
+    .manage-item h4 {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.2rem;
+    }
+
+    .manage-item p {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.45rem 0.9rem;
+      border-radius: var(--radius-sm);
+      transition: filter 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-danger:hover {
+      filter: brightness(1.12);
+    }
+
+    .toast {
+      position: fixed;
+      right: 1.25rem;
+      bottom: 1.25rem;
+      z-index: 60;
+      max-width: 24rem;
+      padding: 0.85rem 1.1rem;
+      border-radius: var(--radius-md);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #fff;
+      box-shadow: var(--shadow-lg);
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast.ok { background: var(--success); }
+    .toast.err { background: var(--danger); }
+
+    .hidden-panel { display: none; }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============================ LOGIN VIEW ============================ -->
+  <div id="loginView" class="flex items-center justify-center px-4 py-16">
+    <div class="admin-card w-full max-w-md p-8">
+      <div class="flex flex-col items-center text-center mb-6">
+        <img src="assets/logo.jpg" alt="TNS Crest" class="h-16 w-16 object-contain bg-white p-1 rounded-full border-2 border-gold/60 mb-3">
+        <h1 class="font-serif-header text-lg text-navy font-bold">Admin Dashboard</h1>
+        <p class="text-sm" style="color: var(--muted);">The National School &amp; College — Events &amp; Announcements</p>
+      </div>
+
+      <form id="loginForm" novalidate>
+        <div class="mb-4">
+          <label class="admin-label" for="loginEmail">Email</label>
+          <input class="admin-input" type="email" id="loginEmail" autocomplete="email" placeholder="admin@tnsc.edu.pk" required>
+        </div>
+        <div class="mb-5">
+          <label class="admin-label" for="loginPassword">Password</label>
+          <input class="admin-input" type="password" id="loginPassword" autocomplete="current-password" placeholder="••••••••" required>
+        </div>
+        <button type="submit" id="loginBtn" class="gold-badge w-full py-3 text-navy font-extrabold text-sm rounded-xl uppercase tracking-wider">
+          <i class="fa-solid fa-lock-open mr-2" aria-hidden="true"></i> Sign In
+        </button>
+        <p id="loginError" class="hidden mt-3 text-sm font-semibold" style="color: var(--danger);"></p>
+      </form>
+
+      <p class="text-xs text-center mt-6" style="color: var(--muted);">
+        <i class="fa-solid fa-shield-halved mr-1" aria-hidden="true"></i>
+        Only authorized staff can manage website content.
+      </p>
+    </div>
+  </div>
+
+  <!-- ============================ DASHBOARD VIEW ============================ -->
+  <div id="dashboardView" class="hidden">
+    <!-- Top bar -->
+    <header class="bg-navy text-white sticky top-0 z-40 shadow-lg">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <img src="assets/logo.jpg" alt="TNS" class="h-10 w-10 object-contain bg-white p-0.5 rounded-full border border-gold/60">
+          <div>
+            <p class="font-serif-header font-bold text-sm leading-tight">Admin Dashboard</p>
+            <p class="text-[11px] text-amber-300" id="adminEmailLabel"></p>
+          </div>
+        </div>
+        <a href="index.html" class="text-xs font-semibold hover:text-amber-200 mr-3" title="Open public website">
+          <i class="fa-solid fa-arrow-up-right-from-square mr-1" aria-hidden="true"></i>View Site
+        </a>
+        <button type="button" id="logoutBtn" class="text-xs font-bold px-3 py-2 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20">
+          <i class="fa-solid fa-right-from-bracket mr-1" aria-hidden="true"></i>Logout
+        </button>
+      </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+
+      <!-- Tabs -->
+      <div class="flex gap-3 mb-6 max-w-xl mx-auto">
+        <button type="button" class="tab-btn active" data-tab="events">Events</button>
+        <button type="button" class="tab-btn" data-tab="announcements">Announcements</button>
+      </div>
+
+      <!-- ===================== EVENTS TAB ===================== -->
+      <section id="tab-events" class="tab-panel">
+
+        <div class="admin-card p-6 mb-6">
+          <h3 class="font-serif-header font-bold text-lg text-navy mb-1"><i class="fa-solid fa-calendar-plus text-gold mr-2" aria-hidden="true"></i>Add New Event</h3>
+          <p class="text-sm mb-4" style="color: var(--muted);">New events appear under "Upcoming Events &amp; Schedule" on the website.</p>
+
+          <form id="eventForm" class="grid grid-cols-1 md:grid-cols-2 gap-4" novalidate>
+            <div class="md:col-span-2">
+              <label class="admin-label" for="evTitle">Event Title *</label>
+              <input class="admin-input" type="text" id="evTitle" placeholder="e.g. Annual Science Exhibition" required>
+            </div>
+            <div>
+              <label class="admin-label" for="evDate">Event Date *</label>
+              <input class="admin-input" type="date" id="evDate" required>
+            </div>
+            <div>
+              <label class="admin-label" for="evStatus">Status</label>
+              <select class="admin-select" id="evStatus">
+                <option>Upcoming</option>
+                <option>Planned</option>
+                <option>Active Notice</option>
+              </select>
+            </div>
+            <div class="md:col-span-2">
+              <label class="admin-label" for="evLocation">Location</label>
+              <input class="admin-input" type="text" id="evLocation" placeholder="e.g. Main Assembly Hall, TNS Campus">
+            </div>
+            <div class="md:col-span-2">
+              <label class="admin-label" for="evDescription">Description *</label>
+              <textarea class="admin-textarea" id="evDescription" rows="3" placeholder="Short description shown to visitors..." required></textarea>
+            </div>
+            <div class="md:col-span-2">
+              <button type="submit" class="gold-badge px-6 py-2.5 text-navy font-extrabold text-xs rounded-xl uppercase tracking-wider">
+                <i class="fa-solid fa-plus mr-2" aria-hidden="true"></i>Publish Event
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="admin-card p-6">
+          <h3 class="font-serif-header font-bold text-lg text-navy mb-1"><i class="fa-solid fa-list text-gold mr-2" aria-hidden="true"></i>Current Events</h3>
+          <p class="text-sm mb-4" style="color: var(--muted);">Click delete to remove an event from the website.</p>
+          <div id="eventsManageList">
+            <p class="text-sm" style="color: var(--muted);">Loading...</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== ANNOUNCEMENTS TAB ===================== -->
+      <section id="tab-announcements" class="tab-panel hidden-panel">
+
+        <div class="admin-card p-6 mb-6">
+          <h3 class="font-serif-header font-bold text-lg text-navy mb-1"><i class="fa-solid fa-bullhorn text-gold mr-2" aria-hidden="true"></i>Add New Announcement</h3>
+          <p class="text-sm mb-4" style="color: var(--muted);">New announcements appear under "Latest Notices &amp; Announcements" on the website.</p>
+
+          <form id="annForm" class="grid grid-cols-1 md:grid-cols-2 gap-4" novalidate>
+            <div class="md:col-span-2">
+              <label class="admin-label" for="anTitle">Announcement Title *</label>
+              <input class="admin-input" type="text" id="anTitle" placeholder="e.g. Midterm Exam Schedule Released" required>
+            </div>
+            <div>
+              <label class="admin-label" for="anCategory">Category</label>
+              <select class="admin-select" id="anCategory">
+                <option>Academic</option>
+                <option>E-Learning</option>
+                <option>General</option>
+              </select>
+            </div>
+            <div>
+              <label class="admin-label" for="anDateLabel">Date Label</label>
+              <input class="admin-input" type="text" id="anDateLabel" placeholder="e.g. Aug 2026">
+            </div>
+            <div class="md:col-span-2">
+              <label class="admin-label" for="anDescription">Description *</label>
+              <textarea class="admin-textarea" id="anDescription" rows="3" placeholder="Short notice text shown to visitors..." required></textarea>
+            </div>
+            <div>
+              <label class="admin-label" for="anFooter">Footer Label</label>
+              <input class="admin-input" type="text" id="anFooter" placeholder="e.g. Admissions Office">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="admin-label" for="anLinkText">Link Text</label>
+                <input class="admin-input" type="text" id="anLinkText" placeholder="Enquire">
+              </div>
+              <div>
+                <label class="admin-label" for="anLinkHref">Link Target</label>
+                <input class="admin-input" type="text" id="anLinkHref" placeholder="#contact">
+              </div>
+            </div>
+            <div class="md:col-span-2">
+              <button type="submit" class="gold-badge px-6 py-2.5 text-navy font-extrabold text-xs rounded-xl uppercase tracking-wider">
+                <i class="fa-solid fa-plus mr-2" aria-hidden="true"></i>Publish Announcement
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="admin-card p-6">
+          <h3 class="font-serif-header font-bold text-lg text-navy mb-1"><i class="fa-solid fa-list text-gold mr-2" aria-hidden="true"></i>Current Announcements</h3>
+          <p class="text-sm mb-4" style="color: var(--muted);">Click delete to remove an announcement from the website.</p>
+          <div id="annManageList">
+            <p class="text-sm" style="color: var(--muted);">Loading...</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/admin.js"></script>
+
+</body>
+
+</html>

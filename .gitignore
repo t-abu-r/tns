@@ -1,0 +1,12 @@
+# Junk / logs
+server.log
+UsersarshaAppDataLocalTempopencodecdp-inspect.mjs
+*.log
+
+# Stale duplicate copy (main live files live in css/ and js/)
+ee/
+
+# Node / OS
+node_modules/
+.DS_Store
+Thumbs.db
