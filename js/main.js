@@ -31,6 +31,7 @@
       if (img.complete && img.naturalWidth === 0) applyLogoFallback(img);
     });
     initNavbar();
+    initSmoothScroll();
     initHeroCarousel();
     initStatsCounter();
     initAcademicsTabFilter();
@@ -105,6 +106,41 @@ function initNavbar() {
       if (window.innerWidth >= 768) closeMenu();
     });
   }
+}
+
+/* Smooth-scroll for in-page anchors (header links, Apply Now, footer links).
+   Handles the sticky header offset and waits for the mobile drawer to
+   collapse before scrolling so the target position is correct. */
+function initSmoothScroll() {
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('a[href^="#"]');
+    if (!link) return;
+
+    const id = link.getAttribute('href');
+    if (!id || id === '#') return;
+
+    const target = document.querySelector(id);
+    if (!target) return;
+
+    e.preventDefault();
+
+    const scroll = () => {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (window.history && window.history.pushState) {
+        window.history.pushState(null, '', id);
+      }
+    };
+
+    const menu = document.getElementById('mobileMenu');
+    const fromDrawer = menu && menu.contains(link);
+    if (fromDrawer) {
+      // The drawer's close handler runs before this document-level listener,
+      // so wait for its collapse animation (0.35s) before scrolling.
+      setTimeout(scroll, 380);
+    } else {
+      scroll();
+    }
+  });
 }
 
 /* ==========================================================================
@@ -207,7 +243,7 @@ const subjectsData = {
       icon: "fa-calculator", 
       desc: "Algebraic structures, trigonometry, vector geometry, statistics, and coordinate geometry.", 
       topics: ["Algebra & Functions", "Trigonometry", "Vectors & Matrices", "Statistics & Probability"],
-      teacher: { name: "Sir. Muzaffar", role: "Senior Mathematics Specialist", imagePath: "rough/Maths teacher.jpeg" }
+      teacher: { name: "Sir. Muzaffar", role: "Senior Mathematics Specialist", imagePath: "assets/sir.muzafar_math_teacher.jpeg" }
     },
     { 
       name: "English Language", 
@@ -216,7 +252,7 @@ const subjectsData = {
       icon: "fa-book", 
       desc: "Reading comprehension, analytical essay writing, directed writing, and vocabulary skills.", 
       topics: ["Comprehension & Analysis", "Directed Writing", "Composition", "Language Usage"],
-      teacher: { name: "Sir. Abid Nathaniel", role: "English Language Faculty Lead", imagePath: "rough/Eng teacher .jpeg" }
+      teacher: { name: "Sir. Abid Nathaniel", role: "English Language Faculty Lead", imagePath: "assets/Sir. Abid Nathaniel_English_Faculty_lead.png" }
     },
     { 
       name: "Urdu", 
@@ -225,7 +261,7 @@ const subjectsData = {
       icon: "fa-language", 
       desc: "Urdu syllabus covering translation, essay writing, passage comprehension, and grammar.", 
       topics: ["Translation Skills", "Essay Writing", "Comprehension", "Grammar"],
-      teacher: { name: "Sir. M Anis Hijazi", role: "Senior Urdu Faculty", imagePath: "rough/Urdu teacher.jpeg" }
+      teacher: { name: "Sir. M Anis Hijazi", role: "Senior Urdu Faculty", imagePath: "assets/Sir.M_Anis_Hijazi_URDU.jpeg" }
     },
     { 
       name: "Islamiyat", 
@@ -234,7 +270,7 @@ const subjectsData = {
       icon: "fa-mosque", 
       desc: "Study of Quranic passages, Life of the Prophet (PBUH), early Muslim community, and Hadith.", 
       topics: ["Quranic Passages", "Life of Prophet (PBUH)", "First Islamic Community", "Hadiths of Prophet"],
-      teacher: { name: "Sir. Saeed", role: "Islamiyat Senior Scholar", imagePath: "rough/islamiate teacher.jpeg" }
+      teacher: { name: "Sir. Saeed", role: "Islamiyat Senior Scholar", imagePath: "assets/Sir.Saeed_Islamiyat.jpeg" }
     },
     { 
       name: "Pakistan Studies", 
@@ -252,7 +288,7 @@ const subjectsData = {
       icon: "fa-flask", 
       desc: "Stoichiometry, organic chemistry, electrochemistry, periodic trends, and chemical energetics.", 
       topics: ["States of Matter", "Chemical Bonding", "Organic Chemistry", "Chemical Energetics"],
-      teacher: { name: "Sir. Arslan Bukhari", role: "Senior Chemistry Faculty", imagePath: "rough/Chemistry teacher.jpeg" }
+      teacher: { name: "Sir. Arslan Bukhari", role: "Senior Chemistry Faculty", imagePath: "assets/Sir.Arslan_Bukhari_Chemistry.jpeg" }
     },
     { 
       name: "Physics", 
@@ -261,7 +297,7 @@ const subjectsData = {
       icon: "fa-atom", 
       desc: "Fundamental principles of mechanics, thermal physics, waves, electricity, magnetism, and nuclear physics.", 
       topics: ["Kinematics & Dynamics", "Thermal Physics", "Electricity & Magnetism", "Atomic Physics"],
-      teacher: { name: "Sir. Bilal Bhatti", role: "Senior Physics Specialist", imagePath: "rough/Physics teacher.jpeg" }
+      teacher: { name: "Sir. Bilal Bhatti", role: "Senior Physics Specialist", imagePath: "assets/Physics_teacher_sir_bilal.jpeg" }
     },
     { 
       name: "Computer Science", 
@@ -270,7 +306,7 @@ const subjectsData = {
       icon: "fa-laptop-code", 
       desc: "Algorithm design, Python programming, database management, computer networks, and cybersecurity.", 
       topics: ["Logic Gates & Architecture", "Python Programming", "Database Concepts", "Automated Systems"],
-      teacher: { name: "Sir. Farhan Durrani", role: "Head of Computer Science", imagePath: "rough/Computer Teacher.jpeg" }
+      teacher: { name: "Sir. Farhan Durrani", role: "Head of Computer Science", imagePath: "assets/Sir.Farhan_Durrani_computer.jpeg" }
     },
     { 
       name: "Biology", 
@@ -279,7 +315,7 @@ const subjectsData = {
       icon: "fa-dna", 
       desc: "Cellular biology, human physiology, genetics, plant nutrition, ecology, and biotechnology.", 
       topics: ["Cell Structure", "Human Physiology", "Genetics & Inheritance", "Ecology & Ecosystems"],
-      teacher: { name: "Ms. Samia Mohsin", role: "Senior Biology Faculty", imagePath: "rough/Bio teacher.jpeg" }
+      teacher: { name: "Ms. Samia Mohsin", role: "Senior Biology Faculty", imagePath: "assets/Ms.Samia_Mohsin_Biology.jpeg" }
     },
     { 
       name: "Commerce", 
@@ -288,7 +324,7 @@ const subjectsData = {
       icon: "fa-cart-shopping", 
       desc: "Commercial trade principles, international logistics, banking, insurance, and retail operations.", 
       topics: ["Commercial Structure", "Trade & Logistics", "Banking & Finance", "Insurance & Risk"],
-      teacher: { name: "Sir. Yasir Hussain", role: "Commerce & Economics Lead", imagePath: "rough/Economic and commerce teacher.jpeg" }
+      teacher: { name: "Sir. Yasir Hussain", role: "Commerce & Economics Lead", imagePath: "assets/sir.yasir_hussain_commerce_economics.jpeg" }
     },
     { 
       name: "Business Studies", 
@@ -297,7 +333,7 @@ const subjectsData = {
       icon: "fa-briefcase", 
       desc: "Business structure, marketing strategies, financial management, operations, and HR planning.", 
       topics: ["Business Activity", "Marketing Strategy", "Financial Planning", "Human Resources"],
-      teacher: { name: "Sir. Yasir Hussain", role: "Head of Business Studies", imagePath: "rough/Economic and commerce teacher.jpeg" }
+      teacher: { name: "Ms. Sadia Faisal", role: "Head of Business Studies", imagePath: "assets/Ms. Sadia Faisal_Coordinator_Business.jpeg" }
     },
     { 
       name: "Economics", 
@@ -306,7 +342,7 @@ const subjectsData = {
       icon: "fa-coins", 
       desc: "Microeconomics, market demand/supply, macroeconomics, international trade, and government policies.", 
       topics: ["Basic Economic Problem", "Microeconomic Decision Makers", "Government Policies", "International Trade"],
-      teacher: { name: "Sir. Yasir Hussain", role: "Senior Economics Faculty", imagePath: "rough/Economic and commerce teacher.jpeg" }
+      teacher: { name: "Sir. Yasir Hussain", role: "Senior Economics Faculty", imagePath: "assets/sir.yasir_hussain_commerce_economics.jpeg" }
     },
     { 
       name: "Environmental Management", 
@@ -327,7 +363,7 @@ const subjectsData = {
       icon: "fa-atom", 
       desc: "Advanced mechanics, quantum physics, thermodynamics, oscillations, gravitational fields, and particle physics.", 
       topics: ["Circular Motion & Gravitation", "Oscillations & Waves", "Quantum Physics", "Practical Physics"],
-      teacher: { name: "Sir. Bilal Bhatti", role: "A-Level Physics Specialist", imagePath: "rough/Physics teacher.jpeg" }
+      teacher: { name: "Sir. Bilal Bhatti", role: "A-Level Physics Specialist", imagePath: "assets/Physics_teacher_sir_bilal.jpeg" }
     },
     { 
       name: "Chemistry", 
@@ -336,7 +372,7 @@ const subjectsData = {
       icon: "fa-flask", 
       desc: "Transition metals, organic synthesis mechanisms, reaction kinetics, physical chemistry, and spectroscopic analysis.", 
       topics: ["Physical Chemistry", "Inorganic & Transition Metals", "Organic Synthesis", "Analytical Techniques"],
-      teacher: { name: "Sir. Usman Arshad", role: "A-Level Chemistry Lead", imagePath: "rough/Chem a level tecaher.jpeg" }
+      teacher: { name: "Sir. Usman Arshad", role: "A-Level Chemistry Lead", imagePath: "assets/a_levels_usman_arshad_chemistry.png" }
     },
     { 
       name: "Mathematics", 
@@ -345,7 +381,7 @@ const subjectsData = {
       icon: "fa-square-root-variable", 
       desc: "Pure Mathematics (P1 & P3), Mechanics (M1), and Probability & Statistics (S1).", 
       topics: ["Pure Mathematics 1 & 3", "Mechanics 1", "Probability & Statistics 1", "Numerical Methods"],
-      teacher: { name: "Sir. Muzaffar", role: "A-Level Pure Maths Lead", imagePath: "rough/Maths teacher.jpeg" }
+      teacher: { name: "Sir. Muzaffar", role: "A-Level Pure Maths Lead", imagePath: "assets/sir.muzafar_math_teacher.jpeg" }
     },
     { 
       name: "Biology", 
@@ -354,7 +390,7 @@ const subjectsData = {
       icon: "fa-dna", 
       desc: "Molecular genetics, biochemistry, gene technology, neurobiology, and biodiversity conservation.", 
       topics: ["Biochemistry & Enzymes", "Gene Technology", "Control & Coordination", "Ecosystem Dynamics"],
-      teacher: { name: "Ms. Samia Mohsin", role: "A-Level Biology Specialist", imagePath: "rough/Bio teacher.jpeg" }
+      teacher: { name: "Ms. Samia Mohsin", role: "A-Level Biology Specialist", imagePath: "assets/Ms.Samia_Mohsin_Biology.jpeg" }
     },
     { 
       name: "Economics", 
@@ -363,7 +399,7 @@ const subjectsData = {
       icon: "fa-coins", 
       desc: "Market failure, behavioral economics, macroeconomic stability, international monetary systems, and development economics.", 
       topics: ["Price System & Microeconomy", "Government Intervention", "International Macroeconomics", "Economic Development"],
-      teacher: { name: "Sir. Yasir Hussain", role: "A-Level Economics Head", imagePath: "rough/Economic and commerce teacher.jpeg" }
+      teacher: { name: "Sir. Yasir Hussain", role: "A-Level Economics Head", imagePath: "assets/sir.yasir_hussain_commerce_economics.jpeg" }
     },
     { 
       name: "Business Studies", 
@@ -372,7 +408,7 @@ const subjectsData = {
       icon: "fa-briefcase", 
       desc: "Strategic management, financial planning, marketing strategies, global business operations, and human resources.", 
       topics: ["Business Strategy", "Marketing Management", "Finance & Accounting", "Operations & HR"],
-      teacher: { name: "Sir. Yasir Hussain", role: "A-Level Business Head", imagePath: "rough/Economic and commerce teacher.jpeg" }
+      teacher: { name: "Sir. Yasir Hussain", role: "A-Level Business Head", imagePath: "assets/sir.yasir_hussain_commerce_economics.jpeg" }
     },
     { 
       name: "Law", 
@@ -381,7 +417,7 @@ const subjectsData = {
       icon: "fa-scale-balanced", 
       desc: "English legal system, law of contract, law of tort, and criminal law principles.", 
       topics: ["English Legal System", "Law of Contract", "Law of Tort", "Criminal Liability"],
-      teacher: { name: "Sir. Yasir Hussain", role: "A-Level Law Senior Faculty", imagePath: "rough/Economic and commerce teacher.jpeg" }
+      teacher: { name: "Sir. Yasir Hussain", role: "A-Level Law Senior Faculty", imagePath: "assets/sir.yasir_hussain_commerce_economics.jpeg" }
     },
     { 
       name: "Psychology", 
@@ -408,7 +444,7 @@ const subjectsData = {
       icon: "fa-language", 
       desc: "Advanced Urdu language, classical & modern literature, essay writing, prose comprehension, and poetry analysis.", 
       topics: ["Urdu Composition", "Classical Literature", "Modern Literature", "Prose & Translation"],
-      teacher: { name: "Sir. M Anis Hijazi", role: "A-Level Urdu Specialist", imagePath: "rough/Urdu teacher.jpeg" }
+      teacher: { name: "Sir. M Anis Hijazi", role: "A-Level Urdu Specialist", imagePath: "assets/Sir.M_Anis_Hijazi_URDU.jpeg" }
     }
   ]
 };
@@ -491,7 +527,7 @@ function renderSubStreamButtons() {
     bannerContainer.classList.remove('hidden');
     bannerContainer.innerHTML = `
       <div class="coordinator">
-        <img src="rough/Coordinator.jpeg" alt="Ms. Sadia Faisal" class="coordinator-photo" onerror="this.onerror=null; this.src='assets/logo.jpg';" />
+        <img src="assets/Ms. Sadia Faisal_Coordinator_Business.jpeg" alt="Ms. Sadia Faisal" class="coordinator-photo" onerror="this.onerror=null; this.src='assets/logo.jpg';" />
         <div>
           <span class="kicker">Campus Leadership — Cambridge International Pathway</span>
           <span class="c-name">Ms. Sadia Faisal</span>
