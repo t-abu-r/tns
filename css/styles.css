@@ -1313,6 +1313,9 @@ footer {
 }
 .modal-close:hover { background: #E2E8F0; color: var(--navy); }
 
+/* Lock background scroll while a modal is open */
+body.modal-open { overflow: hidden; }
+
 .band-navy {
   background: var(--navy);
   border-radius: var(--radius-sm);

@@ -9,11 +9,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function initProspectusTriggers() {
   document.addEventListener('click', (e) => {
+    // Actions are wired via data-action so they work without inline onclick
+    // (inline handlers are blocked by CSP on many hosts / mobile browsers).
+    const actionEl = e.target.closest('[data-action]');
+    if (actionEl) {
+      const action = actionEl.getAttribute('data-action');
+      if (action === 'close-modal') {
+        e.preventDefault();
+        closeProspectusModal();
+      } else if (action === 'download-pdf') {
+        e.preventDefault();
+        downloadProspectusPDF();
+      }
+      return;
+    }
+
     const btn = e.target.closest('.trigger-prospectus');
     if (btn) {
       e.preventDefault();
       openProspectusModal();
+      return;
     }
+
+    // Clicking the dark backdrop (outside the card) closes the modal too.
+    const backdrop = e.target.closest('.modal-backdrop');
+    if (backdrop && !e.target.closest('.modal-card')) {
+      closeProspectusModal();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeProspectusModal();
   });
 }
 
@@ -21,6 +47,7 @@ function openProspectusModal() {
   const existingModal = document.getElementById('prospectusModal');
   if (existingModal) {
     existingModal.classList.remove('hidden');
+    document.body.classList.add('modal-open');
     return;
   }
 
@@ -37,7 +64,7 @@ function openProspectusModal() {
                 <p class="text-xs" style="color: var(--muted);">Vision Education System — رَبِّ زِدْنِي عِلْمًا</p>
               </div>
             </div>
-            <button type="button" class="modal-close" onclick="closeProspectusModal()" aria-label="Close prospectus dialog">
+            <button type="button" class="modal-close" data-action="close-modal" aria-label="Close prospectus dialog">
               <i class="fa-solid fa-xmark" aria-hidden="true"></i>
             </button>
           </div>
@@ -82,8 +109,8 @@ function openProspectusModal() {
           <div class="modal-footer">
             <span class="text-xs" style="color: var(--muted);">File Format: PDF (Digital Edition 2026)</span>
             <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-              <button type="button" onclick="closeProspectusModal()" class="btn btn-outline btn-sm">Close</button>
-              <button type="button" onclick="downloadProspectusPDF()" class="btn btn-navy btn-sm">
+              <button type="button" data-action="close-modal" class="btn btn-outline btn-sm">Close</button>
+              <button type="button" data-action="download-pdf" class="btn btn-navy btn-sm">
                 <i class="fa-solid fa-file-arrow-down text-gold" aria-hidden="true"></i>
                 Download Prospectus (PDF)
               </button>
@@ -99,6 +126,7 @@ function openProspectusModal() {
   wrapper.id = 'prospectusModalWrapper';
   wrapper.innerHTML = modalHtml;
   document.body.appendChild(wrapper);
+  document.body.classList.add('modal-open');
 }
 
 window.closeProspectusModal = function() {
@@ -110,6 +138,7 @@ window.closeProspectusModal = function() {
   if (dynamicWrapper) {
     dynamicWrapper.remove();
   }
+  document.body.classList.remove('modal-open');
 };
 
 /* ==========================================================================

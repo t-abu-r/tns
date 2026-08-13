@@ -34,9 +34,23 @@
     return [d.toLocaleString('en-US', { month: 'short' }), String(d.getDate())];
   }
 
+  function emptyState(message) {
+    return (
+      '<div class="border border-slate-200 rounded-xl p-6 bg-white text-sm text-center" style="color: var(--muted);">' +
+      '<i class="fa-solid fa-circle-info mr-2" style="color: var(--gold-deep);" aria-hidden="true"></i>' +
+      escapeHTML(message) +
+      '</div>'
+    );
+  }
+
   function renderEvents(rows) {
     var container = document.getElementById('eventsList');
-    if (!container || !rows.length) return false;
+    if (!container) return false;
+
+    if (!rows.length) {
+      container.innerHTML = emptyState('No upcoming events right now. Please check back later.');
+      return true;
+    }
 
     var html = rows.map(function (ev) {
       var m = monthName(ev.date);
@@ -64,7 +78,12 @@
 
   function renderAnnouncements(rows) {
     var container = document.getElementById('announcementsList');
-    if (!container || !rows.length) return false;
+    if (!container) return false;
+
+    if (!rows.length) {
+      container.innerHTML = emptyState('No announcements right now. Please check back later.');
+      return true;
+    }
 
     var html = rows.map(function (a) {
       var cat = String(a.category || '').toLowerCase();
