@@ -664,7 +664,7 @@ window.openSubjectDetail = function(name, code, encodedDesc, encodedTopics) {
               <span class="block text-xs font-bold" style="color: var(--muted);">Academic Counseling Desk</span>
               <span class="text-xs" style="color: var(--ink);">Need advice selecting this subject?</span>
             </div>
-            <a href="#admissions" onclick="closeSubjectModal()" class="btn btn-navy btn-sm">
+            <a href="admissions.html" onclick="closeSubjectModal()" class="btn btn-navy btn-sm">
               Ask Counselor
             </a>
           </div>
