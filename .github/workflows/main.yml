@@ -1,25 +1,31 @@
 name: GigaChad Ateeb's originally written CI
+
 on:
   push:
     branches:
       - main
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
-  group: deploy-${{ github.ref_name }}
+  group: deploy-main
   cancel-in-progress: true
 
 jobs:
-  deploy-to-vercel:
+  deploy:
+    name: Deploy Production
     runs-on: ubuntu-latest
 
-    env:
-      VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
-
     steps:
-      - name: Trigger Vercel deployment
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Deploy to Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
-          curl --fail --show-error --silent \
-            -X POST "${VERCEL_DEPLOY_HOOK}"
+          vercel deploy --prod --yes --token="$VERCEL_TOKEN"
