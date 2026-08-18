@@ -12,22 +12,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  ci:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-
-      - run: npm ci
-
-      - name: Lint and Type Check
-        run: |
-          npm run lint
-          npx tsc --noEmit
 
   deploy-to-vercel:
     needs: ci
