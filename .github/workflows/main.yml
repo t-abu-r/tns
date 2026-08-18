@@ -1,6 +1,5 @@
 name: GigaChad Ateeb's originally written CI
 
-
 on:
   push:
     branches:
@@ -15,7 +14,6 @@ concurrency:
 
 jobs:
   deploy:
-    name: Deploy to Vercel
     runs-on: ubuntu-latest
 
     env:
@@ -24,17 +22,19 @@ jobs:
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
 
-      - name: Pull Vercel configuration
-        run: vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+      - name: Create Vercel project link
+        run: |
+          mkdir -p .vercel
+          echo '{
+            "orgId": "'$VERCEL_ORG_ID'",
+            "projectId": "'$VERCEL_PROJECT_ID'"
+          }' > .vercel/project.json
 
-      - name: Build
-        run: vercel build --prod --token="$VERCEL_TOKEN"
-
-      - name: Deploy
-        run: vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"
+      - name: Deploy to Vercel
+        run: vercel deploy --prod --yes --token="$VERCEL_TOKEN"
