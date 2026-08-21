@@ -1,7 +1,7 @@
 /**
  * TNS — Admin Dashboard script
  * Login (Supabase Auth), then create / delete events & announcements.
- * Runs on admin.html.
+ * Runs on portal.html.
  */
 (function () {
   'use strict';

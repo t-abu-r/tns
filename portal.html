@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard | The National School &amp; College</title>
+  <title>Staff Portal | The National School &amp; College</title>
   <link rel="icon" type="image/jpeg" href="assets/logo.jpg">
   <link rel="apple-touch-icon" href="assets/logo.jpg">
 
@@ -155,14 +155,22 @@
     <div class="admin-card w-full max-w-md p-8">
       <div class="flex flex-col items-center text-center mb-6">
         <img src="assets/logo.jpg" alt="TNS Crest" class="h-16 w-16 object-contain bg-white p-1 rounded-full border-2 border-gold/60 mb-3">
-        <h1 class="font-serif-header text-lg text-navy font-bold">Admin Dashboard</h1>
-        <p class="text-sm" style="color: var(--muted);">The National School &amp; College — Events &amp; Announcements</p>
+        <h1 class="font-serif-header text-lg text-navy font-bold">Staff Portal</h1>
+        <p class="text-sm" style="color: var(--muted);">The National School &amp; College</p>
       </div>
 
       <form id="loginForm" novalidate>
         <div class="mb-4">
+          <label class="admin-label" for="loginUsername">Username</label>
+          <input class="admin-input" type="text" id="loginUsername" autocomplete="username" placeholder="Enter username" required>
+        </div>
+        <div class="mb-4">
           <label class="admin-label" for="loginEmail">Email</label>
-          <input class="admin-input" type="email" id="loginEmail" autocomplete="email" placeholder="admin@tnsc.edu.pk" required>
+          <input class="admin-input" type="email" id="loginEmail" autocomplete="email" placeholder="staff@tnsc.edu.pk" required>
+        </div>
+        <div class="mb-4">
+          <label class="admin-label" for="loginLockCode">Lock Code</label>
+          <input class="admin-input" type="text" id="loginLockCode" placeholder="Enter lock code" required>
         </div>
         <div class="mb-5">
           <label class="admin-label" for="loginPassword">Password</label>
@@ -176,7 +184,7 @@
 
       <p class="text-xs text-center mt-6" style="color: var(--muted);">
         <i class="fa-solid fa-shield-halved mr-1" aria-hidden="true"></i>
-        Only authorized staff can manage website content.
+        Authorized personnel only.
       </p>
     </div>
   </div>
@@ -189,7 +197,7 @@
         <div class="flex items-center gap-3">
           <img src="assets/logo.jpg" alt="TNS" class="h-10 w-10 object-contain bg-white p-0.5 rounded-full border border-gold/60">
           <div>
-            <p class="font-serif-header font-bold text-sm leading-tight">Admin Dashboard</p>
+            <p class="font-serif-header font-bold text-sm leading-tight">Staff Portal</p>
             <p class="text-[11px] text-amber-300" id="adminEmailLabel"></p>
           </div>
         </div>

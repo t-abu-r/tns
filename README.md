@@ -21,7 +21,7 @@ The official website for **The National School & College (Parkview Branch)**, a 
 | `index.html` | Main single-page site — Hero, Leadership, Academics, Campus Life, Contact & FAQ |
 | `admissions.html` | Admissions page — Fee structure, scholarship criteria, admissions steps, inquiry form |
 | `events.html` | Events & Announcements — upcoming events, notices, office hours |
-| `admin.html` | Admin dashboard — Supabase Auth login, CRUD for events/announcements/settings |
+| `portal.html` | Staff portal — Supabase Auth login, CRUD for events/announcements/settings |
 
 ## Directory Structure
 
@@ -30,7 +30,7 @@ tns/
 ├── index.html                 # Main homepage (single-page anchor navigation)
 ├── admissions.html            # Admissions, fees & scholarship page
 ├── events.html                # Events & announcements page
-├── admin.html                 # Admin dashboard (Supabase auth)
+├── portal.html                # Staff portal (Supabase auth)
 ├── assets/
 │   ├── logo.jpg               # School crest logo
 │   ├── manifest.webmanifest   # PWA manifest
@@ -69,7 +69,7 @@ tns/
 ## How Routing Works
 
 - **index.html** uses **anchor-based SPA navigation** (`#home`, `#leadership`, `#academics`, `#campus`, `#contact`). Smooth scrolling is handled by `js/main.js` via `IntersectionObserver` and `scrollIntoView`.
-- **admissions.html**, **events.html**, and **admin.html** are **separate HTML pages** with their own full page load.
+- **admissions.html**, **events.html**, and **portal.html** are **separate HTML pages** with their own full page load.
 - Cross-page links use relative paths (e.g., `admissions.html`, `events.html`, `index.html#campus`).
 
 ## JavaScript Features
@@ -153,7 +153,7 @@ php -S localhost:8000
 
 ## Admin Access
 
-Navigate to `admin.html` and log in with Supabase credentials to manage events, announcements, and office hours settings.
+Navigate to `portal.html` and log in with Supabase credentials to manage events, announcements, and office hours settings.
 
 ## License
 
