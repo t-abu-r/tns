@@ -77,7 +77,7 @@ function initAdmissionsForm() {
     // Build FormData from all named fields
     const formData = new FormData(form);
 
-    fetch('https://formspree.io/f/xaeworlo', {
+    fetch('https://formspree.io/f/xvkplwjd', {
       method: 'POST',
       body: formData,
       headers: { 'Accept': 'application/json' }
