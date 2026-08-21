@@ -217,7 +217,7 @@ function buildPdfContent() {
   add(10, false, '3. Merit scholarships are confirmed with the offer of admission.', 8);
 
   add(12, true, 'Contact Us', 8);
-  add(10, false, 'Main Campus: The National School & College, Gulberg Academic Campus, Lahore, Pakistan.', 3);
+  add(10, false, 'Main Campus: The National School & College, Parkview Academic Campus, Lahore, Pakistan.', 3);
   add(10, false, 'Phone: +92 (42) 3578-9000 | Email: info@tnsc.edu.pk', 8);
 
   return blocks;
