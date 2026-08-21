@@ -1,7 +1,7 @@
 /**
  * TNS — Supabase data loader for the public site.
  * Fetches events and announcements and renders them into the
- * Events & Announcements section (index.html).
+ * Events & Announcements section.
  *
  * If Supabase is not configured yet, or returns no rows, the original
  * static content remains visible as a fallback.
@@ -43,6 +43,39 @@
     );
   }
 
+  function hasMedia(item) {
+    return item.media && Array.isArray(item.media) && item.media.length > 0;
+  }
+
+  function renderMediaThumb(item) {
+    if (!hasMedia(item)) return '';
+    var first = item.media[0];
+    if (first.type === 'video') {
+      return (
+        '<div class="event-media-thumb">' +
+        '<video src="' + escapeHTML(first.url) + '" class="w-full h-full object-cover" muted preload="metadata"></video>' +
+        '<span class="event-media-badge"><i class="fa-solid fa-play"></i></span>' +
+        '</div>'
+      );
+    }
+    var imgSrc = first.thumb || first.url;
+    return (
+      '<div class="event-media-thumb">' +
+      '<img src="' + escapeHTML(imgSrc) + '" alt="" loading="lazy" decoding="async" class="w-full h-full object-cover">' +
+      (item.media.length > 1 ? '<span class="event-media-badge"><i class="fa-solid fa-images"></i> ' + item.media.length + '</span>' : '') +
+      '</div>'
+    );
+  }
+
+  function detailLink(item) {
+    var type = item.date ? 'event' : 'notice';
+    var id = item.id;
+    var slug = item.slug || '';
+    var href = 'detail.html?id=' + encodeURIComponent(id) + '&type=' + type;
+    if (slug) href += '&slug=' + encodeURIComponent(slug);
+    return href;
+  }
+
   function renderEvents(rows) {
     var container = document.getElementById('eventsList');
     if (!container) return false;
@@ -57,8 +90,13 @@
       var statusClass = String(ev.status || '').toLowerCase().indexOf('plan') !== -1 ? ' planned' : '';
       var metaIcon = ev.location ? 'fa-location-dot' : 'fa-clock';
       var metaText = ev.location || ev.date;
+      var mediaHtml = renderMediaThumb(ev);
+      var href = detailLink(ev);
+      var hasContent = ev.content && ev.content.trim().length > 0;
+
       return (
         '<div class="event-item">' +
+        mediaHtml +
         '<div class="event-date"><span class="month">' + escapeHTML(m[0]) + '</span><span class="day">' + escapeHTML(m[1]) + '</span></div>' +
         '<div class="event-body">' +
         '<div class="flex items-center justify-between gap-2 mb-1">' +
@@ -67,6 +105,9 @@
         '</div>' +
         '<p>' + escapeHTML(ev.description) + '</p>' +
         (metaText ? '<div class="meta"><i class="fa-solid ' + metaIcon + '" aria-hidden="true"></i><span>' + escapeHTML(metaText) + '</span></div>' : '') +
+        (hasContent || hasMedia(ev)
+          ? '<div class="mt-2"><a href="' + href + '" class="inline-flex items-center text-xs font-bold uppercase tracking-wider hover:underline" style="color: var(--navy);">Read More <i class="fa-solid fa-arrow-right ml-1.5" aria-hidden="true"></i></a></div>'
+          : '') +
         '</div>' +
         '</div>'
       );
@@ -91,8 +132,13 @@
       var icon = cat === 'academic' ? 'fa-file-lines' : cat === 'elearning' || cat.indexOf('e-learning') !== -1 ? 'fa-laptop' : 'fa-bullhorn';
       var footIcon = cat === 'academic' ? 'fa-building-columns' : 'fa-circle-info';
       var linkHref = a.link_href || '#contact';
+      var mediaHtml = renderMediaThumb(a);
+      var href = detailLink(a);
+      var hasContent = a.content && a.content.trim().length > 0;
+
       return (
         '<div class="notice-item ' + accent + '">' +
+        mediaHtml +
         '<div class="notice-head">' +
         '<span class="notice-tag"><i class="fa-solid ' + icon + ' mr-1" aria-hidden="true"></i>' + escapeHTML(a.category) + '</span>' +
         (a.date_label ? '<span class="notice-date">' + escapeHTML(a.date_label) + '</span>' : '') +
@@ -101,7 +147,9 @@
         '<p>' + escapeHTML(a.description) + '</p>' +
         '<div class="notice-foot">' +
         '<span><i class="fa-solid ' + footIcon + ' mr-1.5" aria-hidden="true"></i>' + escapeHTML(a.footer_label || '') + '</span>' +
-        '<a href="' + escapeHTML(linkHref) + '">' + escapeHTML(a.link_text || 'Enquire') + ' <i class="fa-solid fa-arrow-right text-xs" aria-hidden="true"></i></a>' +
+        (hasContent || hasMedia(a)
+          ? '<a href="' + href + '">Read More <i class="fa-solid fa-arrow-right text-xs" aria-hidden="true"></i></a>'
+          : '<a href="' + escapeHTML(linkHref) + '">' + escapeHTML(a.link_text || 'Enquire') + ' <i class="fa-solid fa-arrow-right text-xs" aria-hidden="true"></i></a>') +
         '</div>' +
         '</div>'
       );

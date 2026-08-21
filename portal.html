@@ -248,8 +248,21 @@
               <input class="admin-input" type="text" id="evLocation" placeholder="e.g. Main Assembly Hall, TNS Campus">
             </div>
             <div class="md:col-span-2">
-              <label class="admin-label" for="evDescription">Description *</label>
-              <textarea class="admin-textarea" id="evDescription" rows="3" placeholder="Short description shown to visitors..." required></textarea>
+              <label class="admin-label" for="evDescription">Short Description * (shown on card)</label>
+              <textarea class="admin-textarea" id="evDescription" rows="2" placeholder="Brief summary for the event card..." required></textarea>
+            </div>
+            <div class="md:col-span-2">
+              <label class="admin-label" for="evContent">Full Content (shown on detail page)</label>
+              <textarea class="admin-textarea" id="evContent" rows="6" placeholder="Write the full article content here. This appears on the Read More page..."></textarea>
+            </div>
+            <div class="md:col-span-2">
+              <label class="admin-label">Media (Images / Videos — max 4)</label>
+              <div id="evMediaZone" class="border-2 border-dashed border-slate-300 rounded-lg p-4 text-center cursor-pointer hover:border-gold hover:bg-gold/5 transition-all" style="min-height: 80px;">
+                <i class="fa-solid fa-cloud-arrow-up text-2xl mb-1" style="color: var(--muted);" aria-hidden="true"></i>
+                <p class="text-xs" style="color: var(--muted);">Click or drag images/videos here (max 50MB each)</p>
+              </div>
+              <p id="evMediaStatus" class="text-xs mt-1" style="color: var(--muted);"></p>
+              <div id="evMediaPreview" class="flex gap-2 mt-2 flex-wrap"></div>
             </div>
             <div class="md:col-span-2">
               <button type="submit" class="gold-badge px-6 py-2.5 text-navy font-extrabold text-xs rounded-xl uppercase tracking-wider">
@@ -293,8 +306,12 @@
               <input class="admin-input" type="text" id="anDateLabel" placeholder="e.g. Aug 2026">
             </div>
             <div class="md:col-span-2">
-              <label class="admin-label" for="anDescription">Description *</label>
-              <textarea class="admin-textarea" id="anDescription" rows="3" placeholder="Short notice text shown to visitors..." required></textarea>
+              <label class="admin-label" for="anDescription">Short Description * (shown on card)</label>
+              <textarea class="admin-textarea" id="anDescription" rows="2" placeholder="Brief summary for the notice card..." required></textarea>
+            </div>
+            <div class="md:col-span-2">
+              <label class="admin-label" for="anContent">Full Content (shown on detail page)</label>
+              <textarea class="admin-textarea" id="anContent" rows="6" placeholder="Write the full article content here. This appears on the Read More page..."></textarea>
             </div>
             <div>
               <label class="admin-label" for="anFooter">Footer Label</label>
@@ -309,6 +326,15 @@
                 <label class="admin-label" for="anLinkHref">Link Target</label>
                 <input class="admin-input" type="text" id="anLinkHref" placeholder="#contact">
               </div>
+            </div>
+            <div class="md:col-span-2">
+              <label class="admin-label">Media (Images / Videos — max 4)</label>
+              <div id="anMediaZone" class="border-2 border-dashed border-slate-300 rounded-lg p-4 text-center cursor-pointer hover:border-gold hover:bg-gold/5 transition-all" style="min-height: 80px;">
+                <i class="fa-solid fa-cloud-arrow-up text-2xl mb-1" style="color: var(--muted);" aria-hidden="true"></i>
+                <p class="text-xs" style="color: var(--muted);">Click or drag images/videos here (max 50MB each)</p>
+              </div>
+              <p id="anMediaStatus" class="text-xs mt-1" style="color: var(--muted);"></p>
+              <div id="anMediaPreview" class="flex gap-2 mt-2 flex-wrap"></div>
             </div>
             <div class="md:col-span-2">
               <button type="submit" class="gold-badge px-6 py-2.5 text-navy font-extrabold text-xs rounded-xl uppercase tracking-wider">
@@ -373,6 +399,8 @@
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase-config.js"></script>
+  <script src="js/cloudinary-config.js"></script>
+  <script src="js/cloudinary-upload.js"></script>
   <script src="js/admin.js"></script>
 
 </body>

@@ -1420,3 +1420,84 @@ body.modal-open { overflow: hidden; }
     scroll-behavior: auto !important;
   }
 }
+
+/* ==========================================================================
+   MEDIA THUMBNAILS — Event & Announcement Cards
+   ========================================================================== */
+.event-media-thumb {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  overflow: hidden;
+  background: var(--paper);
+}
+
+.event-media-thumb img,
+.event-media-thumb video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.event-item:hover .event-media-thumb img,
+.event-item:hover .event-media-thumb video,
+.notice-item:hover .event-media-thumb img,
+.notice-item:hover .event-media-thumb video {
+  transform: scale(1.03);
+}
+
+.event-media-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  backdrop-filter: blur(4px);
+}
+
+.notice-item .event-media-thumb {
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  height: 160px;
+}
+
+/* Detail page media gallery */
+.detail-media-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.detail-media-grid.has-multiple {
+  grid-template-columns: 1fr 1fr;
+}
+
+.detail-media-grid .detail-media-item {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--paper);
+}
+
+.detail-media-grid .detail-media-item img,
+.detail-media-grid .detail-media-item video {
+  width: 100%;
+  display: block;
+  border-radius: var(--radius-md);
+}
+
+@media (max-width: 640px) {
+  .detail-media-grid.has-multiple {
+    grid-template-columns: 1fr;
+  }
+  .event-media-thumb {
+    height: 140px;
+  }
+}

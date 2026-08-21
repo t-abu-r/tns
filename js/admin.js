@@ -7,6 +7,8 @@
   'use strict';
 
   var client = null;
+  var evMediaCtrl = null;
+  var anMediaCtrl = null;
 
   var $ = function (id) { return document.getElementById(id); };
 
@@ -33,6 +35,14 @@
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#39;');
+  }
+
+  function slugify(text) {
+    return String(text || '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '')
+      .substring(0, 120);
   }
 
   /* ------------------------------------------------------------------ */
@@ -86,8 +96,17 @@
       var sub = document.createElement('p');
       if (item.date) sub.textContent = item.date;
       else sub.textContent = (item.category || '') + (item.date_label ? ' · ' + item.date_label : '');
+
+      var mediaInfo = document.createElement('p');
+      var mediaCount = (item.media && Array.isArray(item.media)) ? item.media.length : 0;
+      if (mediaCount > 0) {
+        mediaInfo.innerHTML = '<i class="fa-solid fa-images mr-1" aria-hidden="true"></i>' + mediaCount + ' media item' + (mediaCount > 1 ? 's' : '');
+        mediaInfo.style.cssText = 'font-size: 0.75rem; color: var(--muted); margin-top: 2px;';
+      }
+
       info.appendChild(title);
       info.appendChild(sub);
+      if (mediaCount > 0) info.appendChild(mediaInfo);
 
       var delBtn = document.createElement('button');
       delBtn.type = 'button';
@@ -145,6 +164,8 @@
     var status = $('evStatus').value;
     var location = $('evLocation').value.trim();
     var description = $('evDescription').value.trim();
+    var content = $('evContent').value.trim();
+    var media = evMediaCtrl ? evMediaCtrl.getMedia() : [];
 
     if (!title || !date || !description) {
       toast('Please fill in all required fields (Title, Date, Description).', false);
@@ -156,16 +177,20 @@
 
     var res = await client.from('events').insert({
       title: title,
+      slug: slugify(title),
       date: date,
       status: status,
       location: location,
-      description: description
+      description: description,
+      content: content,
+      media: media
     });
 
     btn.disabled = false;
     if (res.error) { toast('Failed to publish event: ' + res.error.message, false); return; }
 
     e.target.reset();
+    if (evMediaCtrl) evMediaCtrl.clear();
     toast('Event published!', true);
     loadEvents();
   }
@@ -176,9 +201,11 @@
     var category = $('anCategory').value;
     var dateLabel = $('anDateLabel').value.trim();
     var description = $('anDescription').value.trim();
+    var content = $('anContent').value.trim();
     var footer = $('anFooter').value.trim();
     var linkText = $('anLinkText').value.trim() || 'Enquire';
     var linkHref = $('anLinkHref').value.trim() || '#contact';
+    var media = anMediaCtrl ? anMediaCtrl.getMedia() : [];
 
     if (!title || !description) {
       toast('Please fill in all required fields (Title, Description).', false);
@@ -190,18 +217,22 @@
 
     var res = await client.from('announcements').insert({
       title: title,
+      slug: slugify(title),
       category: category,
       date_label: dateLabel,
       description: description,
+      content: content,
       footer_label: footer,
       link_text: linkText,
-      link_href: linkHref
+      link_href: linkHref,
+      media: media
     });
 
     btn.disabled = false;
     if (res.error) { toast('Failed to publish announcement: ' + res.error.message, false); return; }
 
     e.target.reset();
+    if (anMediaCtrl) anMediaCtrl.clear();
     toast('Announcement published!', true);
     loadAnnouncements();
   }
@@ -304,6 +335,12 @@
     }
 
     initTabs();
+
+    // Initialize Cloudinary upload zones
+    if (window.TNS_CloudinaryUpload) {
+      evMediaCtrl = window.TNS_CloudinaryUpload.initUploadZone('evMediaZone', 'evMediaPreview', 'evMediaStatus');
+      anMediaCtrl = window.TNS_CloudinaryUpload.initUploadZone('anMediaZone', 'anMediaPreview', 'anMediaStatus');
+    }
 
     $('loginForm').addEventListener('submit', handleLogin);
     $('logoutBtn').addEventListener('click', handleLogout);

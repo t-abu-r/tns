@@ -18,10 +18,13 @@
 create table if not exists public.events (
   id          uuid primary key default gen_random_uuid(),
   title       text not null,
+  slug        text not null default '',
   date        date not null,
   description text not null,
+  content     text not null default '',
   location    text,
   status      text not null default 'Upcoming',
+  media       jsonb not null default '[]'::jsonb,
   created_at  timestamptz not null default now(),
   created_by  uuid references auth.users (id) on delete set null
 );
@@ -32,12 +35,15 @@ create table if not exists public.events (
 create table if not exists public.announcements (
   id           uuid primary key default gen_random_uuid(),
   title        text not null,
-  category     text not null default 'Academic',   -- Academic | E-Learning | General
+  slug         text not null default '',
+  category     text not null default 'Academic',
   description  text not null,
-  date_label   text not null default '',           -- e.g. "Aug 2026"
-  footer_label text not null default '',           -- e.g. "Admissions Office"
+  content      text not null default '',
+  date_label   text not null default '',
+  footer_label text not null default '',
   link_text    text not null default 'Enquire',
   link_href    text not null default '#contact',
+  media        jsonb not null default '[]'::jsonb,
   created_at   timestamptz not null default now(),
   created_by   uuid references auth.users (id) on delete set null
 );

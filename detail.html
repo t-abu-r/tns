@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Detail | The National School &amp; College</title>
+  <link rel="icon" type="image/jpeg" href="assets/logo.jpg">
+  <link rel="apple-touch-icon" href="assets/logo.jpg">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#002147">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: '#002147',
+            royal: '#002147',
+            'royal-light': '#1D3557',
+            silver: '#E2E8F0',
+            'silver-light': '#F8FAFC',
+            'silver-dark': '#94A3B8',
+            gold: '#D4AF37',
+            'gold-hover': '#E5BE48'
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    .detail-loading { text-align: center; padding: 4rem 1rem; color: var(--muted); }
+    .detail-content { line-height: 1.8; font-size: 1rem; color: var(--ink); }
+    .detail-content p { margin-bottom: 1rem; }
+    .detail-meta-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
+    .detail-meta-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--muted); }
+    .detail-meta-item i { color: var(--gold); }
+  </style>
+</head>
+
+<body>
+
+  <header id="mainNav" class="glass-nav sticky top-0 z-40 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center min-h-20">
+      <div class="flex items-center justify-between w-full min-h-20 py-1 gap-6 lg:gap-10">
+        <a href="events.html" class="flex items-center space-x-4 group py-1 min-w-0">
+          <div class="relative flex-shrink-0">
+            <img src="assets/logo.jpg" alt="TNS Crest"
+              class="h-12 w-12 sm:h-14 sm:w-14 object-cover drop-shadow-xl group-hover:scale-105 transition-transform bg-white p-1 rounded-full border-2 border-gold/60">
+          </div>
+          <div class="min-w-0">
+            <span class="block text-base sm:text-lg font-bold font-serif-header text-white tracking-wide leading-tight group-hover:text-amber-200 transition-colors">
+              The National School &amp; College
+            </span>
+            <span class="block text-amber-300 font-sans text-[10px] sm:text-xs font-bold">(O/A Level Department)</span>
+          </div>
+        </a>
+        <a href="events.html" class="text-xs font-semibold text-white hover:text-amber-200 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-xl border border-white/20 transition-all">
+          <i class="fa-solid fa-arrow-left mr-1.5" aria-hidden="true"></i>Back to Events
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" style="padding-top: 2rem;">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div id="detailLoading" class="detail-loading">
+          <i class="fa-solid fa-circle-notch fa-spin text-3xl mb-3" style="color: var(--gold);" aria-hidden="true"></i>
+          <p>Loading...</p>
+        </div>
+
+        <div id="detailNotFound" class="detail-loading hidden">
+          <i class="fa-solid fa-circle-exclamation text-3xl mb-3" style="color: var(--danger);" aria-hidden="true"></i>
+          <p>Item not found.</p>
+          <a href="events.html" class="btn btn-navy mt-4 inline-block" style="text-decoration:none;">Back to Events</a>
+        </div>
+
+        <article id="detailContent" class="hidden">
+          <div id="detailBreadcrumb" class="mb-4">
+            <a href="events.html" class="text-xs font-semibold uppercase tracking-wider hover:underline" style="color: var(--gold);">Events &amp; Announcements</a>
+          </div>
+
+          <h1 id="detailTitle" class="font-serif-header font-bold text-2xl sm:text-3xl mb-3" style="color: var(--navy);"></h1>
+
+          <div id="detailMeta" class="detail-meta-row"></div>
+
+          <div id="detailMedia" class="mb-8"></div>
+
+          <div id="detailBody" class="detail-content"></div>
+
+          <div class="mt-10 pt-6 border-t" style="border-color: var(--line);">
+            <a href="events.html" class="inline-flex items-center text-sm font-bold uppercase tracking-wider hover:underline" style="color: var(--navy);">
+              <i class="fa-solid fa-arrow-left mr-2" aria-hidden="true"></i>Back to Events &amp; Announcements
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" style="margin-top: 3rem;">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="footer-bottom">
+        <p>&copy; 2026 The National School &amp; College. All rights reserved.</p>
+        <p class="arabic">"رَبِّ زِدْنِي عِلْمًا" — Vision Education System</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      var params = new URLSearchParams(window.location.search);
+      var itemId = params.get('id');
+      var itemType = params.get('type') || 'event';
+
+      function escapeHTML(str) {
+        return String(str == null ? '' : str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      function getClient() {
+        if (!window.supabase) return null;
+        var cfg = window.TNS_SUPABASE;
+        if (!cfg || !cfg.url || cfg.url.indexOf('YOUR_') === 0 || !cfg.anonKey || cfg.anonKey.indexOf('YOUR_') === 0) return null;
+        return window.supabase.createClient(cfg.url, cfg.anonKey);
+      }
+
+      function formatDate(dateStr) {
+        if (!dateStr) return '';
+        var d = new Date(dateStr + (dateStr.length === 10 ? 'T00:00:00' : ''));
+        if (isNaN(d.getTime())) return dateStr;
+        return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      }
+
+      function renderMediaGallery(mediaArr) {
+        if (!mediaArr || !mediaArr.length) return '';
+        var gridClass = mediaArr.length > 1 ? 'detail-media-grid has-multiple' : 'detail-media-grid';
+        var items = mediaArr.map(function (item) {
+          if (item.type === 'video') {
+            return '<div class="detail-media-item"><video src="' + escapeHTML(item.url) + '" controls playsinline preload="metadata" style="width:100%;border-radius:var(--radius-md);"></video></div>';
+          }
+          return '<div class="detail-media-item"><img src="' + escapeHTML(item.url) + '" alt="Event media" loading="lazy" decoding="async" style="width:100%;border-radius:var(--radius-md);"></div>';
+        }).join('');
+        return '<div class="' + gridClass + '">' + items + '</div>';
+      }
+
+      async function loadDetail() {
+        var client = getClient();
+        if (!client || !itemId) {
+          document.getElementById('detailLoading').classList.add('hidden');
+          document.getElementById('detailNotFound').classList.remove('hidden');
+          return;
+        }
+
+        var table = itemType === 'notice' ? 'announcements' : 'events';
+        var res = await client.from(table).select('*').eq('id', itemId).single();
+
+        document.getElementById('detailLoading').classList.add('hidden');
+
+        if (res.error || !res.data) {
+          document.getElementById('detailNotFound').classList.remove('hidden');
+          return;
+        }
+
+        var item = res.data;
+        document.title = item.title + ' | The National School & College';
+
+        document.getElementById('detailTitle').textContent = item.title;
+
+        var metaHtml = '';
+        if (item.date) metaHtml += '<div class="detail-meta-item"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i><span>' + escapeHTML(formatDate(item.date)) + '</span></div>';
+        if (item.date_label) metaHtml += '<div class="detail-meta-item"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i><span>' + escapeHTML(item.date_label) + '</span></div>';
+        if (item.location) metaHtml += '<div class="detail-meta-item"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span>' + escapeHTML(item.location) + '</span></div>';
+        if (item.status) metaHtml += '<div class="detail-meta-item"><i class="fa-solid fa-tag" aria-hidden="true"></i><span>' + escapeHTML(item.status) + '</span></div>';
+        if (item.category) metaHtml += '<div class="detail-meta-item"><i class="fa-solid fa-folder" aria-hidden="true"></i><span>' + escapeHTML(item.category) + '</span></div>';
+        document.getElementById('detailMeta').innerHTML = metaHtml;
+
+        if (item.media && item.media.length) {
+          document.getElementById('detailMedia').innerHTML = renderMediaGallery(item.media);
+        }
+
+        var bodyText = item.content || item.description || '';
+        document.getElementById('detailBody').innerHTML = '<p>' + escapeHTML(bodyText).replace(/\n/g, '</p><p>') + '</p>';
+
+        document.getElementById('detailContent').classList.remove('hidden');
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', loadDetail);
+      } else {
+        loadDetail();
+      }
+    })();
+  </script>
+
+</body>
+
+</html>
