@@ -97,17 +97,17 @@ function initAdmissionsForm() {
           response.json().then(data => {
             const msg = (data && data.errors)
               ? data.errors.map(e => e.message).join(', ')
-              : 'Submission failed. Please try again or contact us directly.';
-            showToast(msg, 'error');
+              : 'Submission failed.';
+            showToast(`${msg} Please try again or manually send an email to <strong>tns.olevels.official@gmail.com</strong>.`, 'error');
           }).catch(() => {
-            showToast('Submission failed. Please try again or contact us directly.', 'error');
+            showToast('Submission failed. Please try again or manually send an email to <strong>tns.olevels.official@gmail.com</strong>.', 'error');
           });
         }
       })
       .catch(() => {
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalBtnHtml;
-        showToast('Network error. Please check your connection and try again.', 'error');
+        showToast('Network error. Please check your connection and try again, or manually send an email to <strong>tns.olevels.official@gmail.com</strong>.', 'error');
       });
   });
 }
